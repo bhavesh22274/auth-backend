@@ -1,3 +1,4 @@
+import uploadImageOnCloudinary from "../config/cloudinary.js"
 import generateToken from "../config/token.js"
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
@@ -7,6 +8,16 @@ export const signup=async(req,res)=>{
         if(!firstName||!lastName||!email||!password||!userName){
             return res.status(400).json({"message":"send all details"})
         }
+        //image
+        
+        //console.log("Multer file:",req.file);
+        let profileimage;
+        if(req.file){
+            profileimage=await uploadImageOnCloudinary(req.file.path);
+        }
+        console.log("Cloudinary URL:",profileimage);
+        
+        
         //chech if user already exist!![username or email]
         let existingUser=await User.findOne({email})
         if(existingUser){
@@ -20,7 +31,8 @@ export const signup=async(req,res)=>{
             lastName:lastName,
             email:email,
             password:hassedPassword,
-            userName:userName
+            userName:userName,
+            profileimage:profileimage
         })
         //generate token
         let token;
@@ -42,7 +54,8 @@ export const signup=async(req,res)=>{
             firstName,
             lastName,
             email,
-            userName
+            userName,
+            profileimage
         }})
 
     } catch (error) {

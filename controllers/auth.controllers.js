@@ -9,8 +9,7 @@ export const signup=async(req,res)=>{
             return res.status(400).json({"message":"send all details"})
         }
         //image
-        
-        //console.log("Multer file:",req.file);
+        console.log("Multer file:",req.file);
         let profileimage;
         if(req.file){
             profileimage=await uploadImageOnCloudinary(req.file.path);
@@ -107,4 +106,10 @@ export const logout =async (req,res)=>{
     } catch (error) {
         return res.status(500).json(error)
     }
+}
+export const verify=async(req,res)=>{
+    res.json({
+        message:"welcome to home",
+        userId:req.userId
+    })
 }

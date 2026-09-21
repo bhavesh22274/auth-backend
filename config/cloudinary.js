@@ -5,6 +5,7 @@ cloudinary.config({
     api_key:process.env.CLOUDINARY_API_KEY,
     api_secret:process.env.CLOUDINARY_API_SECRET
 })
+//a file path will come and you need to save that!!
 const uploadImageOnCloudinary=async (filePath)=>{
     try {
         if(!filePath){
